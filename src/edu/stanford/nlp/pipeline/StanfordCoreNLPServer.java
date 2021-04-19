@@ -58,7 +58,7 @@ public class StanfordCoreNLPServer implements Runnable {
   @ArgumentParser.Option(name="server_id", gloss="a name for this server")
   protected String serverID; // = null; // currently not used
   @ArgumentParser.Option(name="port", gloss="The port to run the server on")
-  protected int serverPort = 9000;
+  protected int serverPort = 9010;
   @ArgumentParser.Option(name="status_port", gloss="The port to serve the status check endpoints on. If different from the server port, this will run in a separate thread.")
   protected int statusPort = serverPort;
   @ArgumentParser.Option(name="uriContext", gloss="The URI context")
@@ -895,9 +895,20 @@ public class StanfordCoreNLPServer implements Runnable {
           if ( ! quiet) {
             log("[" + httpExchange.getRemoteAddress() + "] API call w/annotators " + props.getProperty("annotators", "<unknown>"));
           }
-          ann = getDocument(props, httpExchange);
+          ann = getDocument(props, httpExchange);         
           of = StanfordCoreNLP.OutputFormat.valueOf(props.getProperty("outputFormat", "json").toUpperCase());
           String text = ann.get(CoreAnnotations.TextAnnotation.class).replace('\n', ' ');
+          
+          try{
+          String[] cachos = text.split("&");
+          String last = cachos[cachos.size-1];
+          last = last.replace("=","");
+          text=last;
+          }catch(Exception ex)
+          {
+              System.out.println("Fallé al intentar normalizar " + e.getMessage());
+          }
+          
           if ( ! quiet) {
             System.out.println(text);
           }

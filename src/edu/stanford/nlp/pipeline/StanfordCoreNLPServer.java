@@ -904,6 +904,7 @@ public class StanfordCoreNLPServer implements Runnable {
           String last = cachos[cachos.length-1];
           last = last.replace("=","");
           text=last;
+          ann.set(CoreAnnotations.TextAnnotation.class, text);
           }catch(Exception ex)
           {
               System.out.println("Fallé al intentar normalizar " + ex.getMessage());

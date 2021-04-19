@@ -901,12 +901,12 @@ public class StanfordCoreNLPServer implements Runnable {
           
           try{
           String[] cachos = text.split("&");
-          String last = cachos[cachos.size-1];
+          String last = cachos[cachos.length-1];
           last = last.replace("=","");
           text=last;
           }catch(Exception ex)
           {
-              System.out.println("Fallé al intentar normalizar " + e.getMessage());
+              System.out.println("Fallé al intentar normalizar " + ex.getMessage());
           }
           
           if ( ! quiet) {

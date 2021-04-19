@@ -16,3 +16,4 @@ classes/**
 
 # emacs
 *~
+/target/
